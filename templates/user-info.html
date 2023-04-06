@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}User Info{% endblock %}
+
+{% block content %}
+<div class="container" style="width:40rem;">
+	<div class="card">
+		<div class="card-body">
+			<h4>{{user.first_name}} {{user.last_name}}</h4>
+			<h5>username: {{user.username}}</h5>
+			<h5>email: {{user.email}}</h5>
+			<form action="/users/{{user.username}}/delete" method="post">
+				<a class="btn btn-secondary" href="/logout">Logout</a>
+				<button class="btn btn-danger" type="submit">Delete</button>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="container" style="width:40rem;">
+	<div class="card">
+		<div class="card-body">
+			<h4>Feedback</h4>
+			{% for feedback in user.feedback %}
+			<div class="card">
+				<div class="card-body">
+					<h5>{{feedback.title}}</h5>
+					<p>{{feedback.content}}</p>
+					<form action="/feedback/{{feedback.id}}/delete" method="POST">
+						<a class="btn btn-primary" href="/feedback/{{feedback.id}}/update">Update</a>
+						<button class="btn btn-danger" type="submit">Delete</button>
+					</form>
+				</div>
+			</div>
+			{% endfor %}
+			<form action="/users/{{user.username}}/feedback/add">
+				<button class="btn btn-secondary" type="submit">Add Feedback</button>
+		</div>
+	</div>
+</div>	
+{% endblock %}
